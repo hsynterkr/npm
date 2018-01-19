@@ -19,5 +19,7 @@
     "url": "https://github.com/utopian-io/utopian-api-npm/issues"
   },
   "homepage": "https://github.com/utopian-io/utopian-api-npm/#readme",
-  "dependencies": {}
+  "dependencies": {
+    "request": "2.83.0"
+  }
 }

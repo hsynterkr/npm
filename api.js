@@ -1,3 +1,5 @@
+const request = require('request');
+
 const API_HOST = "https://api.utopian.io/api";
 const ENDPOINT_MODERATORS = API_HOST + '/moderators';
 const ENDPOINT_SPONSORS = API_HOST + '/sponsors';
@@ -8,6 +10,8 @@ const POST_TYPE_TRANSLATIONS = "translations";
 const POST_TYPE_DEVELOPMENT = "development";
 const POST_TYPE_BUGHUNTING = "bug-hunting";
 const POST_TYPE_DOCUMENTATION = "documentation";
+
+const GITHUB_REPO_URL = 'https://api.github.com/repos/';
 
 let utopian = {};
 
@@ -26,29 +30,21 @@ const encodeQueryData = function(parameters) {
 
 /**
  * @method requestURL: Fetch an API and returns its body
- * @param {string} url: String of the url to fetch
+ * @param {string} options: String of the url to fetch
  * @returns A promise with the body of the response
  * @throws If promise is done but api returned error, reject the promise with the error. Otherwise, throw an error
  */
-const requestURL = function(url) {
+const requestURL = function(options) {
     // return new pending promise
     return new Promise((resolve, reject) => {
-      // select http or https module, depending on reqested url
-      const lib = url.startsWith('https') ? require('https') : require('http');
-      const request = lib.get(url, (response) => {
+      request.get(options, (err, response, body) => {
         // handle http errors
-        if (response.statusCode < 200 || response.statusCode > 299) {
+        if (err || response.statusCode < 200 || response.statusCode > 299) {
            reject(new Error('Failed to load page, status code: ' + response.statusCode));
         }
-        // temporary data holder
-        const body = [];
-        // on every content chunk, push it to the data array
-        response.on('data', (chunk) => body.push(chunk));
         // we are done, resolve promise with those joined chunks
-        response.on('end', () => resolve(body.join('')));
+        resolve(body);
       });
-      // handle connection errors of the request
-      request.on('error', (err) => reject(err));
     }).catch((err) => {
         throw err;
     });
@@ -258,5 +254,39 @@ utopian.getTotalPostCount = () => {
         }).catch((err) => no(err));
     });
 };
+
+/**
+ * @method getPostsByGithubProject: Return list of posts related to given github repository
+ * @argument {string} repoName: repository name, i.e.: utopian-io/utopian-api-npm
+ * @argument {Object} options: options for the data (optional)
+ * @returns Promise object array of posts
+ */
+utopian.getPostsByGithubProject = (repoName, options) => {
+    return new Promise((yes, no) => {
+        return getGithubRepoIdByRepoName(repoName)
+            .then(projectId => {
+                return utopian.getPosts(Object.assign({
+                    section: 'project',
+                    sortBy: 'created',
+                    platform: 'github',
+                    projectId,
+                    type: 'all'
+                }, options || {})).then(yes).catch(no);
+            }).catch(no);
+    });
+};
+
+function getGithubRepoIdByRepoName(repoName) {
+    return new Promise((yes, no) => {
+        requestURL({
+            method: 'GET',
+            url: GITHUB_REPO_URL + repoName,
+            headers: { 'User-Agent': '' }
+        }).then((data) => {
+            if (!data) no(false);
+            else yes(JSON.parse(data).id);
+        }).catch((err) => no(err));
+    });
+}
 
 module.exports = utopian;

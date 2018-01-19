@@ -28,6 +28,8 @@ To install this libary run: `npm i utopian-api --save`
 
 `getTotalPostCount()` : get total posts count
 
+`getStats()` : get utopian statistics
+
 
 ## Examples
 
@@ -116,6 +118,14 @@ let utopian = require('utopian-api');
 
 utopian.getTotalPostsCount().then((count) => {
     console.log("There are " + count + " posts on utopian.io. AMAZING!");
+})
+````
+
+````js
+let utopian = require('utopian-api');
+
+uutopian.getStats().then((data) => {
+  console.log(data);
 })
 ````
 

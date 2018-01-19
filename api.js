@@ -2,6 +2,7 @@ const API_HOST = "https://api.utopian.io/api";
 const ENDPOINT_MODERATORS = API_HOST + '/moderators';
 const ENDPOINT_SPONSORS = API_HOST + '/sponsors';
 const ENDPOINT_POSTS = API_HOST + '/posts';
+const ENDPOINT_STATS = API_HOST + '/stats'
 
 const POST_TYPE_TRANSLATIONS = "translations";
 const POST_TYPE_DEVELOPMENT = "development";
@@ -76,6 +77,20 @@ utopian.getSponsors = () => {
         }).catch((err) => no(err));
     });
 };
+
+
+/**
+ * @method getStats: Return the return utopian statistics
+ * @returns Promise object array of utopian statistics
+ */
+utopian.getStats = () => {
+    return new Promise((yes, no) => {
+        requestURL(ENDPOINT_STATS).then((data) => {
+            yes(JSON.parse(data));
+        }).catch((err) => no(err));
+    });
+};
+
 
 /**
  * @method getModerator: Return the return specific data from a moderator

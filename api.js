@@ -1,4 +1,4 @@
-const request = require('request');
+const { URL } = require('url');
 
 const API_HOST = "https://api.utopian.io/api";
 const ENDPOINT_MODERATORS = API_HOST + '/moderators';
@@ -20,35 +20,51 @@ let utopian = {};
  * @param {Object} parameters: Object of parameter
  * @returns encoded url with the parameters given.
  */
-const encodeQueryData = function(parameters) {
+const encodeQueryData = function (parameters) {
     // temporary data holder
     let ret = [];
     for (let d in parameters)
-      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(parameters[d]));
+        ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(parameters[d]));
     return ret.join('&');
 }
 
 /**
  * @method requestURL: Fetch an API and returns its body
- * @param {string} options: String of the url to fetch
+ * @param {string} url: String of the url to fetch
  * @returns A promise with the body of the response
  * @throws If promise is done but api returned error, reject the promise with the error. Otherwise, throw an error
  */
-const requestURL = function(options) {
+const requestURL = function (url) {
+    const myURL = new URL(url);
+    const options = {
+        hostname: myURL.hostname,
+        protocol: myURL.protocol,
+        path: myURL.pathname + myURL.search,
+        headers: { 'User-Agent': '' }
+    };
     // return new pending promise
     return new Promise((resolve, reject) => {
-      request.get(options, (err, response, body) => {
-        // handle http errors
-        if (err || response.statusCode < 200 || response.statusCode > 299) {
-           reject(new Error('Failed to load page, status code: ' + response.statusCode));
-        }
-        // we are done, resolve promise with those joined chunks
-        resolve(body);
-      });
+        // select http or https module, depending on reqested url
+        const lib = url.startsWith('https') ? require('https') : require('http');
+        const request = lib.get(options, (response) => {
+            // handle http errors
+            if (response.statusCode < 200 || response.statusCode > 299) {
+                reject(new Error('Failed to load page, status code: ' + response.statusCode));
+            }
+            // temporary data holder
+            const body = [];
+            // on every content chunk, push it to the data array
+            response.on('data', (chunk) => body.push(chunk));
+            // we are done, resolve promise with those joined chunks
+            response.on('end', () => resolve(body.join('')));
+        });
+        // handle connection errors of the request
+        request.on('error', (err) => reject(err));
     }).catch((err) => {
         throw err;
     });
-}
+};
+
 
 /**
  * @method getModerators: Return the moderators of Utopian
@@ -235,7 +251,7 @@ utopian.getPendingPostsByModerator = (moderator) => {
  */
 utopian.getPendingPostsCount = () => {
     return new Promise((yes, no) => {
-        requestURL(ENDPOINT_POSTS + '?' + encodeQueryData({filterBy: 'review', limit: 1, skip: 0})).then((data) => {
+        requestURL(ENDPOINT_POSTS + '?' + encodeQueryData({ filterBy: 'review', limit: 1, skip: 0 })).then((data) => {
             if (!data) no(false);
             else yes(JSON.parse(data).total);
         }).catch((err) => no(err));
@@ -248,7 +264,7 @@ utopian.getPendingPostsCount = () => {
  */
 utopian.getTotalPostCount = () => {
     return new Promise((yes, no) => {
-        requestURL(ENDPOINT_POSTS + '?' + encodeQueryData({limit: 1, skip: 0})).then((data) => {
+        requestURL(ENDPOINT_POSTS + '?' + encodeQueryData({ limit: 1, skip: 0 })).then((data) => {
             if (!data) no(false);
             else yes(JSON.parse(data).total);
         }).catch((err) => no(err));
@@ -276,13 +292,14 @@ utopian.getPostsByGithubProject = (repoName, options) => {
     });
 };
 
+/**
+ * @method getGithubRepoIdByRepoName: Return github repo id by given github repo
+ * @argument {string} repoName: repository full name, i.e.: utopian-io/utopian-api-npm
+ * @returns Promise object array of posts
+ */
 function getGithubRepoIdByRepoName(repoName) {
     return new Promise((yes, no) => {
-        requestURL({
-            method: 'GET',
-            url: GITHUB_REPO_URL + repoName,
-            headers: { 'User-Agent': '' }
-        }).then((data) => {
+        requestURL(GITHUB_REPO_URL + repoName).then((data) => {
             if (!data) no(false);
             else yes(JSON.parse(data).id);
         }).catch((err) => no(err));

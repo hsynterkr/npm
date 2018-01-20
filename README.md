@@ -139,7 +139,7 @@ utopian.getPostsByGithubProject('utopian-io/utopian-api-npm', {
 ````js
 const utopian = require('utopian-api');
 
-uutopian.getStats().then((data) => {
+utopian.getStats().then((data) => {
   console.log(data);
 })
 ````

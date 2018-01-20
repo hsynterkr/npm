@@ -2,7 +2,7 @@
 
 This is the official npm package for the utopian api.
 
-[![Build Status](https://travis-ci.org/ms10398/utopian-api-npm-1.svg?branch=master)](https://travis-ci.org/ms10398/utopian-api-npm-1)
+[![Build Status](https://travis-ci.org/utopian-io/utopian-api-npm.svg?branch=master)](https://travis-ci.org/utopian-io/utopian-api-npm)
 
 ## Installation
 

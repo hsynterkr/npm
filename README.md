@@ -2,9 +2,25 @@
 
 This is the official npm package for the utopian api.
 
+[![Build Status](https://travis-ci.org/ms10398/utopian-api-npm-1.svg?branch=master)](https://travis-ci.org/ms10398/utopian-api-npm-1)
+
 ## Installation
 
 To install this libary run: `npm i utopian-api --save`
+
+## Running Tests
+
+For running tests locally run: `npm test`
+
+#### Tests
+- Standard(Code Quality)
+- Chai & Mocha(API tests)
+
+#### To fix small code quality issues
+
+- Check if standard is installed globally. If not, then run `npm install -g standard`
+
+- Type `standard --fix`
 
 ## Methods
 

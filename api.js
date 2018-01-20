@@ -3,6 +3,7 @@ const ENDPOINT_MODERATORS = API_HOST + '/moderators'
 const ENDPOINT_SPONSORS = API_HOST + '/sponsors'
 const ENDPOINT_POSTS = API_HOST + '/posts'
 const ENDPOINT_STATS = API_HOST + '/stats'
+const ENDPOINT_POSTS_TOP = ENDPOINT_POSTS + '/top'
 
 let utopian = {}
 
@@ -137,6 +138,21 @@ utopian.getPosts = (options) => {
 
   return new Promise((resolve, reject) => {
     requestURL(ENDPOINT_POSTS + '?' + encodeQueryData(options)).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getTopProjects: Return list of top projects in a given query
+ * @argument {Object}: query for the data
+ * @returns Promise object array of top projects
+ */
+utopian.getTopProjects = (options) => {
+  if (!options) options = {}
+
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_POSTS_TOP + '?' + encodeQueryData(options)).then((data) => {
       resolve(JSON.parse(data))
     }).catch((err) => reject(err))
   })

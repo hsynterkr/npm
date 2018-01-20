@@ -140,14 +140,25 @@ utopian.getTotalPostsCount().then((count) => {
 ````js
 let utopian = require('utopian-api');
 
-uutopian.getStats().then((data) => {
+utopian.getStats().then((data) => {
   console.log(data);
 })
+````
+````js
+let utopian = require('utopian-api');
+
+utopian.getTopProjects({
+    limit: 5,
+    start_date: '2017-12-08',
+    end_date: '2018-01-20',
+    sort_by: 'contributions',   // contributions or rewards
+    retrieve_by: 'projects',    // projects or contributions
+    only_new: false
+}).then((data) => {
+    console.log(data); 
+});
 ````
 
 ## Contribution
 
 If you want to contribute to this package create a fork, make your changes and create a pull request.
-
-
-

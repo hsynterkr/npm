@@ -196,4 +196,22 @@ utopian.getPostURL = (postID) => {
   })
 }
 
+utopian.getPostByAuthor = (username, options) => {
+  return new Promise((resolve, reject) => {
+    if (!options) options = {}
+    if (options.limit > 20 || options.limit < 1) {
+      options.limit = 20
+    }
+    if (options.length === 0) {
+      options.limit = 20
+      options.skip = 0
+    }
+    options.section = 'author'
+    options.author = username
+    requestURL(ENDPOINT_POSTS + '?' + encodeQueryData(options)).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
 module.exports = utopian

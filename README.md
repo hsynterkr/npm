@@ -176,7 +176,15 @@ utopian.getPostURL('26763950').then((data) => {
   	}
 );
 ````
+*Get Post By Author*
+````js
+let utopian = require('utopian-api');
 
+utopian.getPostByAuthor('ms10398').then((data) => {
+    	console.log(data);
+  	}
+);
+````
 ## Contribution
 
 If you want to contribute to this package create a fork, make your changes and create a pull request.

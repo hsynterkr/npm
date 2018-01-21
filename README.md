@@ -158,7 +158,33 @@ utopian.getTopProjects({
     console.log(data); 
 });
 ````
+*Get an Individual Post*
+````js
+let utopian = require('utopian-api');
 
+utopian.getPost('ms10398','add-tests-ci-and-standard-code-quality-checks-in-npm-package').then((data) => {
+    	console.log(data);
+  	}
+);
+````
+*Get Post URL*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPostURL('26763950').then((data) => {
+    	console.log(data);
+  	}
+);
+````
+*Get Post By Author*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPostByAuthor('ms10398').then((data) => {
+    	console.log(data);
+  	}
+);
+````
 ## Contribution
 
 If you want to contribute to this package create a fork, make your changes and create a pull request.

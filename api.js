@@ -170,4 +170,53 @@ utopian.getTotalPostCount = () => {
   })
 }
 
+/**
+ * @method getPost: Return the post in a given query
+ * @argument {string, string}: author and permlink of the post
+ * @returns Promise object of post
+ */
+utopian.getPost = (username, permlink) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_POSTS + '/' + username + '/' + permlink).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getPostURL: Return the post URL
+ * @argument {string}: postID in blockchain
+ * @returns Promise URL of the post
+ */
+utopian.getPostURL = (postID) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_POSTS + '/byid/' + postID).then((data) => {
+      resolve('https://utopian.io' + JSON.parse(data).url)
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getPostByAuthoe: Return the posts
+ * @argument {username, options}: username of author and limit and skip as options
+ * @returns Promise Object of the posts
+ */
+utopian.getPostByAuthor = (username, options) => {
+  return new Promise((resolve, reject) => {
+    if (!options) options = {}
+    if (options.limit > 20 || options.limit < 1) {
+      options.limit = 20
+    }
+    if (options.length === 0) {
+      options.limit = 20
+      options.skip = 0
+    }
+    options.section = 'author'
+    options.author = username
+    requestURL(ENDPOINT_POSTS + '?' + encodeQueryData(options)).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
 module.exports = utopian

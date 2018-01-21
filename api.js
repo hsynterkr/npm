@@ -170,4 +170,25 @@ utopian.getTotalPostCount = () => {
   })
 }
 
+/**
+ * @method getPost: Return the post in a given query
+ * @argument {string, string}: author and permlink of the post
+ * @returns Promise object of post
+ */
+utopian.getPost = (username, permlink) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_POSTS + '/' + username + '/' + permlink).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
+utopian.getPostURL = (username, permlink) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_POSTS + '/' + username + '/' + permlink).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
 module.exports = utopian

@@ -158,6 +158,16 @@ utopian.getTopProjects({
     console.log(data); 
 });
 ````
+*Get an Individual Post*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPost('ms10398','add-tests-ci-and-standard-code-quality-checks-in-npm-package').then((data) => {
+    	console.log(data);
+  	}
+);
+````
+
 
 ## Contribution
 

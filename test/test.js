@@ -33,3 +33,11 @@ describe('Utopian Posts by Author Function test', () => {
     })
   })
 })
+
+describe('Utopian Post URL Function test', () => {
+  it('Should return a string', () => {
+    return Utopian.getPostURL('26763950').then(function (data) {
+      expect(data).to.be.a('string')
+    })
+  })
+})

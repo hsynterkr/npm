@@ -196,6 +196,11 @@ utopian.getPostURL = (postID) => {
   })
 }
 
+/**
+ * @method getPostByAuthoe: Return the posts
+ * @argument {username, options}: username of author and limit and skip as options
+ * @returns Promise Object of the posts
+ */
 utopian.getPostByAuthor = (username, options) => {
   return new Promise((resolve, reject) => {
     if (!options) options = {}

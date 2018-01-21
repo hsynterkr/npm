@@ -183,10 +183,15 @@ utopian.getPost = (username, permlink) => {
   })
 }
 
-utopian.getPostURL = (username, permlink) => {
+/**
+ * @method getPostURL: Return the post URL
+ * @argument {string}: postID in blockchain
+ * @returns Promise URL of the post
+ */
+utopian.getPostURL = (postID) => {
   return new Promise((resolve, reject) => {
-    requestURL(ENDPOINT_POSTS + '/' + username + '/' + permlink).then((data) => {
-      resolve(JSON.parse(data))
+    requestURL(ENDPOINT_POSTS + '/byid/' + postID).then((data) => {
+      resolve('https://utopian.io' + JSON.parse(data).url)
     }).catch((err) => reject(err))
   })
 }

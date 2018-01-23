@@ -2,9 +2,25 @@
 
 This is the official npm package for the utopian api.
 
+[![Build Status](https://travis-ci.org/utopian-io/utopian-api-npm.svg?branch=master)](https://travis-ci.org/utopian-io/utopian-api-npm)
+
 ## Installation
 
 To install this libary run: `npm i utopian-api --save`
+
+## Running Tests
+
+For running tests locally run: `npm test`
+
+#### Tests
+- Standard(Code Quality)
+- Chai & Mocha(API tests)
+
+#### To fix small code quality issues
+
+- Check if standard is installed globally. If not, then run `npm install -g standard`
+
+- Type `standard --fix`
 
 ## Methods
 
@@ -143,10 +159,47 @@ utopian.getStats().then((data) => {
   console.log(data);
 })
 ````
+````js
+let utopian = require('utopian-api');
 
+utopian.getTopProjects({
+    limit: 5,
+    start_date: '2017-12-08',
+    end_date: '2018-01-20',
+    sort_by: 'contributions',   // contributions or rewards
+    retrieve_by: 'projects',    // projects or contributions
+    only_new: false
+}).then((data) => {
+    console.log(data); 
+});
+````
+*Get an Individual Post*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPost('ms10398','add-tests-ci-and-standard-code-quality-checks-in-npm-package').then((data) => {
+    	console.log(data);
+  	}
+);
+````
+*Get Post URL*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPostURL('26763950').then((data) => {
+    	console.log(data);
+  	}
+);
+````
+*Get Post By Author*
+````js
+let utopian = require('utopian-api');
+
+utopian.getPostByAuthor('ms10398').then((data) => {
+    	console.log(data);
+  	}
+);
+````
 ## Contribution
 
 If you want to contribute to this package create a fork, make your changes and create a pull request.
-
-
-

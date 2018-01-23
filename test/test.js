@@ -42,7 +42,7 @@ describe('Utopian Post URL Function test', () => {
   })
 })
 
-describe.only('Utopian Project Posts by Github Repository Name test', () => {
+describe('Utopian Project Posts by Github Repository Name test', () => {
   it('Should return a JSON', () => {
     return Utopian.getPostsByGithubProject('utopian-io/utopian-api-npm', {
       limit: 1

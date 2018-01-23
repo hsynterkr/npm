@@ -34,6 +34,8 @@ For running tests locally run: `npm test`
 
 `getPosts(options)` : returns array of posts. Use options to apply filters.
 
+`getPostsByGithubProject(repoName, options)` : returns array of posts related to github repositry. Use options (optionally) to apply filters.
+
 `getPendingPosts()` : alias to get pending posts
 
 `getPendingPostsByModeratorAndCategory(moderator, category)` : alias to get pending posts for the given moderator in the given category
@@ -52,7 +54,7 @@ For running tests locally run: `npm test`
 *Get all moderators and log their names:*
 
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getModerators().then((moderators) => {
     for (i = 0; i < moderators.results.length; i++) {
@@ -63,7 +65,7 @@ utopian.getModerators().then((moderators) => {
 *Get all sponsors and log their names:*
 
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getSponsors().then((sponsors) => {
     for (i = 0; i < sponsors.results.length; i++) {
@@ -75,7 +77,7 @@ utopian.getSponsors().then((sponsors) => {
 *Check wether a user is a utopian.io mod:*
 
 ````js
-let utopian = require('./api');
+const utopian = require('./api');
 utopian.getModerator("wehmoen").then((result) => {
     console.log(result);
 }); // returns [{_id: '5a4bf....}]
@@ -87,7 +89,7 @@ utopian.getModerator("ned").then((result) => {
 *Get posts for the development category:*
 
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getPosts({
     sortBy: 'created',
@@ -106,7 +108,7 @@ utopian.getPosts({
 ````
 *Limit the number of results:*
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getPosts({
     sortBy: 'created',
@@ -120,7 +122,7 @@ utopian.getPosts({
 *Get pending posts count:*
 
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getPendingPostsCount().then((count) => {
     console.log("There are " + count + " pending posts.");
@@ -130,15 +132,28 @@ utopian.getPendingPostsCount().then((count) => {
 *Get total posts count:*
 
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
 
 utopian.getTotalPostsCount().then((count) => {
     console.log("There are " + count + " posts on utopian.io. AMAZING!");
 })
 ````
 
+*Get posts of utopian-io/utopian-api-npm project hosted on github:*
+
 ````js
-let utopian = require('utopian-api');
+const utopian = require('utopian-api');
+
+utopian.getPostsByGithubProject('utopian-io/utopian-api-npm', {
+    type: 'development'
+}).then(response => {
+    console.log("There are " + response.total + " posts on utopian-io/utopian-api-npm project. AMAZING!");
+})
+````
+
+
+````js
+const utopian = require('utopian-api');
 
 utopian.getStats().then((data) => {
   console.log(data);

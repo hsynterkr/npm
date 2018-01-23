@@ -207,7 +207,7 @@ utopian.getPostURL = (postID) => {
 }
 
 /**
- * @method getPostByAuthoe: Return the posts
+ * @method getPostByAuthor: Return the posts
  * @argument {username, options}: username of author and limit and skip as options
  * @returns Promise Object of the posts
  */

@@ -23,9 +23,6 @@ For running tests locally run: `npm test`
 - Type `standard --fix`
 
 ## Methods
-`getUser()` : returns an utopian user
-
-`getUserAvatar()` : returns user's avatar
 
 `getModerators()` : returns array of utopian moderators
 
@@ -51,6 +48,11 @@ For running tests locally run: `npm test`
 
 `getStats()` : get utopian statistics
 
+`getUser()` : returns an utopian user
+
+`getUserAvatar()` : returns user's avatar
+
+`getUserRepos()` : returns an utopian user's Github repositories
 
 ## Examples
 

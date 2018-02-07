@@ -222,7 +222,7 @@ utopian.getUserAvatar('hsynterkr',{
     console.log(data);
 });
 ````
-*Get User*
+*Get User Repositories*
 ````js
 let utopian = require('utopian-api');
 

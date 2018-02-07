@@ -48,12 +48,6 @@ For running tests locally run: `npm test`
 
 `getStats()` : get utopian statistics
 
-`getUser()` : returns an utopian user
-
-`getUserAvatar()` : returns user's avatar
-
-`getUserRepos()` : returns an utopian user's Github repositories
-
 ## Examples
 
 *Get all moderators and log their names:*
@@ -204,33 +198,6 @@ utopian.getPostByAuthor('ms10398').then((data) => {
     	console.log(data);
   	}
 );
-````
-*Get User*
-````js
-let utopian = require('utopian-api');
-
-utopian.getUser('hsynterkr').then((data) => {
-    console.log(data);
-});
-````
-*Get User Avatar*
-````js
-let utopian = require('utopian-api');
-
-utopian.getUserAvatar('hsynterkr',{
-    size: 48,
-    round: true
-}).then((data) => {
-    console.log(data);
-});
-````
-*Get User Repositories*
-````js
-let utopian = require('utopian-api');
-
-utopian.getUserRepos('hsynterkr').then((data) => {
-    console.log(data);
-});
 ````
 ## Contribution
 

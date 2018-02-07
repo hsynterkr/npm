@@ -264,43 +264,4 @@ function getGithubRepoIdByRepoName (repoName) {
   })
 }
 
-/**
- * @method getUser: Return a user
- * @argument {string} username: username of user
- * @returns Promise user info
- */
-utopian.getUser = (username) => {
-  return new Promise((resolve, reject) => {
-    requestURL(ENDPOINT_USER + username).then((data) => {
-      resolve(JSON.parse(data))
-    }).catch((err) => reject(err))
-  })
-}
-
-/**
- * @method getUserAvatar: Return user avatar
- * @argument {username, options}: username of user and size and round options
- * @returns Promise user avatar
- */
-utopian.getUserAvatar = (username, options) => {
-  return new Promise((resolve, reject) => {
-    requestURL(ENDPOINT_USER + username + '/avatar?' + encodeQueryData(options)).then((data) => {
-      resolve(data)
-    }).catch((err) => reject(err))
-  })
-}
-
-/**
- * @method getUser: Return a user
- * @argument {string} username: username of user
- * @returns Promise user info
- */
-utopian.getUserRepos = (username) => {
-  return new Promise((resolve, reject) => {
-    requestURL(ENDPOINT_USER + username + '/repos').then((data) => {
-      resolve(JSON.parse(data))
-    }).catch((err) => reject(err))
-  })
-}
-
 module.exports = utopian

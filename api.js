@@ -7,6 +7,7 @@ const ENDPOINT_POSTS = API_HOST + '/posts'
 const ENDPOINT_STATS = API_HOST + '/stats'
 const ENDPOINT_POSTS_TOP = ENDPOINT_POSTS + '/top'
 const GITHUB_REPO_URL = 'https://api.github.com/repos/'
+const ENDPOINT_USER = API_HOST + '/users/'
 
 let utopian = {}
 
@@ -259,6 +260,45 @@ function getGithubRepoIdByRepoName (repoName) {
   return new Promise((resolve, reject) => {
     requestURL(GITHUB_REPO_URL + repoName).then((data) => {
       resolve(JSON.parse(data).id)
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getUser: Return a user
+ * @argument {string} username: username of user
+ * @returns Promise user info
+ */
+utopian.getUser = (username) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_USER + username).then((data) => {
+      resolve(JSON.parse(data))
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getUserAvatar: Return user avatar
+ * @argument {username, options}: username of user and size and round options
+ * @returns Promise user avatar
+ */
+utopian.getUserAvatar = (username, options) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_USER + username + '/avatar?' + encodeQueryData(options)).then((data) => {
+      resolve(data)
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * @method getUser: Return a user
+ * @argument {string} username: username of user
+ * @returns Promise user info
+ */
+utopian.getUserRepos = (username) => {
+  return new Promise((resolve, reject) => {
+    requestURL(ENDPOINT_USER + username + '/repos').then((data) => {
+      resolve(JSON.parse(data))
     }).catch((err) => reject(err))
   })
 }

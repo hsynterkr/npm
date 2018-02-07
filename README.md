@@ -23,6 +23,9 @@ For running tests locally run: `npm test`
 - Type `standard --fix`
 
 ## Methods
+`getUser()` : returns an utopian user
+
+`getUserAvatar()` : returns user's avatar
 
 `getModerators()` : returns array of utopian moderators
 
@@ -199,6 +202,33 @@ utopian.getPostByAuthor('ms10398').then((data) => {
     	console.log(data);
   	}
 );
+````
+*Get User*
+````js
+let utopian = require('utopian-api');
+
+utopian.getUser('hsynterkr').then((data) => {
+    console.log(data);
+});
+````
+*Get User Avatar*
+````js
+let utopian = require('utopian-api');
+
+utopian.getUserAvatar('hsynterkr',{
+    size: 48,
+    round: true
+}).then((data) => {
+    console.log(data);
+});
+````
+*Get User*
+````js
+let utopian = require('utopian-api');
+
+utopian.getUserRepos('hsynterkr').then((data) => {
+    console.log(data);
+});
 ````
 ## Contribution
 

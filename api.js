@@ -7,7 +7,6 @@ const ENDPOINT_POSTS = API_HOST + '/posts'
 const ENDPOINT_STATS = API_HOST + '/stats'
 const ENDPOINT_POSTS_TOP = ENDPOINT_POSTS + '/top'
 const GITHUB_REPO_URL = 'https://api.github.com/repos/'
-const ENDPOINT_USER = API_HOST + '/users/'
 
 let utopian = {}
 

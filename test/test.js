@@ -50,7 +50,7 @@ describe('Utopian', function () {
 
   describe('Project Posts by Github Repository Name test', () => {
     it('Should return a JSON', () => {
-      return Utopian.getPostsByGithubProject('utopian-io/utopian-api-npm', {
+      return Utopian.getPostsByGithubProject('utopian-io/npm', {
         limit: 1
       }).then(data => {
         expect(data.results.length).to.equal(1)
